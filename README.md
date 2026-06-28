@@ -6,6 +6,10 @@ Computer-vision prototype for monitoring stadium gate occupancy, crowding, alert
 
 This project uses YOLO object detection with OpenCV and a Flask status API to estimate people counts across predefined stadium gate zones. A separate dashboard reads the API and displays gate status, occupancy, ETA, alerts, and recommended staff distribution.
 
+## Documentation
+
+- [Architecture](docs/architecture.md)
+
 ## Features
 
 - YOLO-based person detection and tracking
@@ -103,4 +107,3 @@ Abdulelah Alkhathami
 
 - Website: [abdulelah.de](https://www.abdulelah.de)
 - GitHub: [Abdulel3h](https://github.com/Abdulel3h)
-
