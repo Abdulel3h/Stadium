@@ -231,7 +231,7 @@
 
   <header>
     <div class="logo">
-      <div class="logo-icon">🏟</div>
+      <div class="logo-icon">ًںڈں</div>
       <div>
         <h1>Gate <span>Monitor</span></h1>
         <div style="font-size:.7rem;color:var(--dim);margin-top:2px">Stadium Smart Control</div>
@@ -272,7 +272,7 @@
     <div class="section-card">
       <div class="section-title">Alert Log</div>
       <div class="alert-list" id="alerts-log">
-        <div class="no-alerts">No alerts yet ✓</div>
+        <div class="no-alerts">No alerts yet âœ“</div>
       </div>
     </div>
     <div class="section-card">
@@ -295,32 +295,47 @@ const STATUS_LABEL = {
   OVERFLOW: "Overflow",
 };
 
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 function buildGateCard(g) {
-  const fillW = Math.min(g.occupancy, 100);
+  const occupancy = Number(g.occupancy) || 0;
+  const fillW = Math.min(occupancy, 100);
+  const gateName = escapeHtml(g.name);
+  const gateStatus = escapeHtml(g.status);
+  const gateAlert = escapeHtml(g.alert);
+  const redirectTo = escapeHtml(g.redirect_to);
+  const statusLabel = escapeHtml(STATUS_LABEL[g.status] ?? g.status);
   const alertHTML = g.alert ? `
-    <div class="gate-alert">${g.alert}
-      ${g.redirect_to ? `<div class="redirect-badge">↗ Move to Gate ${g.redirect_to}</div>` : ""}
+    <div class="gate-alert">${gateAlert}
+      ${g.redirect_to ? `<div class="redirect-badge">â†— Move to Gate ${redirectTo}</div>` : ""}
     </div>` : "";
 
   return `
-    <div class="gate-card ${g.status}">
+    <div class="gate-card ${gateStatus}">
       <div class="gate-header">
-        <div class="gate-name">Gate ${g.name}</div>
-        <div class="status-badge ${g.status}">${STATUS_LABEL[g.status]}</div>
+        <div class="gate-name">Gate ${gateName}</div>
+        <div class="status-badge ${gateStatus}">${statusLabel}</div>
       </div>
-      <div class="count-display">${g.count}</div>
-      <div class="count-of">of ${g.capacity} — ${g.occupancy.toFixed(0)}%</div>
+      <div class="count-display">${Number(g.count) || 0}</div>
+      <div class="count-of">of ${Number(g.capacity) || 0} â€” ${occupancy.toFixed(0)}%</div>
       <div class="fill-bar">
         <div class="fill-progress" style="width:${fillW}%"></div>
       </div>
       <div class="gate-stats">
         <div class="mini-stat">
           <div class="mini-stat-label">Entry Rate</div>
-          <div class="mini-stat-value">${g.entry_rate}/min</div>
+          <div class="mini-stat-value">${Number(g.entry_rate) || 0}/min</div>
         </div>
         <div class="mini-stat">
           <div class="mini-stat-label">Staff Needed</div>
-          <div class="mini-stat-value">${g.recommended_staff} 👷</div>
+          <div class="mini-stat-value">${Number(g.recommended_staff) || 0} ًں‘·</div>
         </div>
       </div>
       ${alertHTML}
@@ -329,25 +344,30 @@ function buildGateCard(g) {
 
 function buildStaffRow(g) {
   const icons = Array(Math.min(g.recommended_staff, 6))
-    .fill('<span class="staff-icon">👷</span>').join("");
+    .fill('<span class="staff-icon">ًں‘·</span>').join("");
+  const gateName = escapeHtml(g.name);
   return `
     <div class="staff-row">
-      <div class="staff-gate">Gate ${g.name}</div>
+      <div class="staff-gate">Gate ${gateName}</div>
       <div class="staff-count">
         <div class="staff-icons">${icons}</div>
-        <div class="staff-num">${g.recommended_staff}</div>
+        <div class="staff-num">${Number(g.recommended_staff) || 0}</div>
       </div>
     </div>`;
 }
 
 function buildAlertItem(a) {
+  const type = escapeHtml(a.type);
+  const gate = escapeHtml(a.gate);
+  const time = escapeHtml(a.time);
+  const message = escapeHtml(a.message);
   return `
-    <div class="alert-item ${a.type}">
+    <div class="alert-item ${type}">
       <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
-        <div class="alert-gate">${a.gate}</div>
-        <div class="alert-time">${a.time}</div>
+        <div class="alert-gate">${gate}</div>
+        <div class="alert-time">${time}</div>
       </div>
-      <div class="alert-msg">${a.message}</div>
+      <div class="alert-msg">${message}</div>
     </div>`;
 }
 
@@ -372,10 +392,10 @@ async function fetchAndRender() {
     const log = data.alerts_log;
     document.getElementById("alerts-log").innerHTML = log.length
       ? log.map(buildAlertItem).join("")
-      : '<div class="no-alerts">No alerts yet ✓</div>';
+      : '<div class="no-alerts">No alerts yet âœ“</div>';
 
   } catch {
-    document.getElementById("timestamp").textContent = "⚠ no connection";
+    document.getElementById("timestamp").textContent = "âڑ  no connection";
   }
 }
 

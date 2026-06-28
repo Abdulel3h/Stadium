@@ -13,6 +13,7 @@ This project uses YOLO object detection with OpenCV and a Flask status API to es
 ## Documentation
 
 - [Architecture](docs/architecture.md)
+- [Case Study](docs/case-study.md)
 - [Engineering Principles](docs/engineering-principles.md)
 - [Technical Decisions](docs/technical-decisions.md)
 - [Reviewer Guide](docs/reviewer-guide.md)
@@ -56,6 +57,12 @@ python -m venv .venv
 . .venv/Scripts/activate
 pip install ultralytics opencv-python flask flask-cors numpy
 python stadium_system.py
+```
+
+Optional local environment:
+
+```bash
+ALLOWED_ORIGINS=http://localhost:5000,http://127.0.0.1:5000
 ```
 
 The API starts at `http://localhost:5000/api/status`. The OpenCV window displays the processed video.
