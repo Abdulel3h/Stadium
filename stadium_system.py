@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+import os
 import time
 import threading
 from collections import deque
@@ -10,7 +11,17 @@ from flask_cors import CORS
 from ultralytics import YOLO
 
 app = Flask(__name__)
-CORS(app)
+
+
+def get_allowed_origins() -> List[str]:
+    raw = os.getenv(
+        "ALLOWED_ORIGINS",
+        "http://localhost:5000,http://127.0.0.1:5000,http://localhost:5500,http://127.0.0.1:5500",
+    )
+    return [origin.strip() for origin in raw.split(",") if origin.strip()]
+
+
+CORS(app, origins=get_allowed_origins())
 
 GATE_DEFINITIONS = {
     "A": {"zone": (50,  100, 320, 520), "capacity": 60, "label_pos": (60, 90)},
