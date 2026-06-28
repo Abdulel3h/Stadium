@@ -15,6 +15,7 @@ This project uses YOLO object detection with OpenCV and a Flask status API to es
 - [Architecture](docs/architecture.md)
 - [Engineering Principles](docs/engineering-principles.md)
 - [Technical Decisions](docs/technical-decisions.md)
+- [Reviewer Guide](docs/reviewer-guide.md)
 
 ## Features
 
