@@ -68,7 +68,9 @@ The API starts at `http://localhost:5000/api/status`. The OpenCV window displays
 
 ## Screenshots
 
-No static screenshots are committed. The repository includes scenario videos and a dashboard UI; add screenshots of the YOLO overlay and dashboard states before using this as a pinned project.
+![Stadium gate dashboard](assets/screenshots/stadium-dashboard.png)
+
+Captured from the committed dashboard HTML. Add YOLO overlay captures from the scenario videos after the vision loop is calibrated.
 
 ## System Design
 
@@ -97,7 +99,7 @@ yolo*.pt              YOLO model files
 ## Future Work
 
 - Move gate definitions to a configuration file.
-- Add recorded screenshots and a short demo video.
+- Add YOLO overlay screenshots and a short demo video.
 - Add tests for `DecisionEngine` status transitions and API responses.
 - Add Docker instructions for repeatable setup.
 - Document camera placement assumptions and privacy constraints.
