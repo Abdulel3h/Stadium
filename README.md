@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="./assets/project-banner.svg" alt="Stadium Gate Monitor project banner" />
+</p>
+
 # Stadium Gate Monitor
 
 Computer-vision prototype for monitoring stadium gate occupancy, crowding, alerts, and staff distribution.
@@ -9,6 +13,8 @@ This project uses YOLO object detection with OpenCV and a Flask status API to es
 ## Documentation
 
 - [Architecture](docs/architecture.md)
+- [Engineering Principles](docs/engineering-principles.md)
+- [Technical Decisions](docs/technical-decisions.md)
 
 ## Features
 
