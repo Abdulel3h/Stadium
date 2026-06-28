@@ -4,6 +4,8 @@
 
 # Stadium Gate Monitor
 
+[![CI](https://github.com/Abdulel3h/Stadium/actions/workflows/ci.yml/badge.svg)](https://github.com/Abdulel3h/Stadium/actions/workflows/ci.yml)
+
 Computer-vision prototype for monitoring stadium gate occupancy, crowding, alerts, and staff distribution.
 
 ## Overview
@@ -17,6 +19,7 @@ This project uses YOLO object detection with OpenCV and a Flask status API to es
 - [Engineering Principles](docs/engineering-principles.md)
 - [Technical Decisions](docs/technical-decisions.md)
 - [Reviewer Guide](docs/reviewer-guide.md)
+- [Testing and CI](docs/testing.md)
 
 ## Features
 
@@ -55,7 +58,7 @@ Video source or webcam
 ```bash
 python -m venv .venv
 . .venv/Scripts/activate
-pip install ultralytics opencv-python flask flask-cors numpy
+pip install -r requirements.txt
 python stadium_system.py
 ```
 
