@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./assets/project-banner.svg" alt="Stadium Gate Monitor project banner" />
+  <img src="assets/branding/cover.svg" alt="Stadium Gate Monitor project banner" />
 </p>
 
 # Stadium Gate Monitor
