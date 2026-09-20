@@ -147,9 +147,9 @@
     }
   </style>
   <rect width="1280" height="640" rx="0" fill="url(#vignette)"/>
-  <text class="m eyebrow" x="60" y="50" font-size="15" fill="#5E7A74" font-weight="500">Computer vision · crowd flow</text>
+  <text class="m eyebrow" x="60" y="50" font-size="15" fill="#5E7A74" font-weight="500">Abdulelah Alkhathami</text>
   <text class="m eyebrow" x="1220" y="50" font-size="15" fill="#5E7A74" font-weight="500" text-anchor="end">Prototype</text>
-  <g transform="translate(944 300) scale(0.96)">
+  <g transform="translate(950 320) scale(0.92)">
     <ellipse rx="280" ry="186" fill="url(#haze)" opacity=".62"/>
     <ellipse cx="0" cy="160" rx="260.4" ry="23.1" fill="url(#pool)" opacity=".5"/><ellipse cx="0" cy="160" rx="168" ry="11" fill="#010403" opacity="0.8" filter="url(#shade)"/>
     <g class="streams"><g filter="url(#glossS)" opacity="0.62"><path d="M-236-140C-130-134-86-70-12-16" fill="none" stroke="url(#glassBack)" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/></g><g filter="url(#glossS)" opacity="0.72"><path d="M-236-58C-142-54-96-28-14-8" fill="none" stroke="url(#glass)" stroke-width="26" stroke-linecap="round" stroke-linejoin="round"/></g><g filter="url(#glossS)" opacity="0.7"><path d="M-236 58C-142 54-96 28-14 8" fill="none" stroke="url(#glass)" stroke-width="26" stroke-linecap="round" stroke-linejoin="round"/></g><g filter="url(#glossS)" opacity="0.6"><path d="M-236 140C-130 134-86 70-12 16" fill="none" stroke="url(#glassBack)" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/></g></g>
@@ -165,11 +165,10 @@
       <path d="M0-30V30" stroke="#F4FFF9" stroke-width="3" stroke-linecap="round"/>
     </g>
   </g>
-  <text class="m eyebrow" x="64" y="150" font-size="20" fill="#22E3C5" font-weight="600">Abdulelah Alkhathami</text>
-  <text class="s" x="64" y="262" font-size="54" fill="#F4FFF9" font-weight="700" letter-spacing="-2.4">Stadium Gate Monitor</text>
-  <text class="s" x="64" y="330" font-size="38" fill="url(#inkFade)" font-weight="600" letter-spacing="-.8">Four streams, one threshold.</text>
-  <text class="s" x="64" y="392" font-size="20" fill="#8FA8A1">YOLO person detection · gate zones · crowding decision rules</text>
-  <g transform="translate(64 500)"><rect width="206" height="64" rx="18" fill="#081915" stroke="#123029"/><text class="s" x="24" y="40" font-size="17" fill="#C3D8D2" font-weight="600">Person detection</text></g><g transform="translate(288 500)"><rect width="206" height="64" rx="18" fill="#081915" stroke="#123029"/><text class="s" x="24" y="40" font-size="17" fill="#C3D8D2" font-weight="600">Gate zones</text></g><g transform="translate(512 500)"><rect width="206" height="64" rx="18" fill="#081915" stroke="#123029"/><text class="s" x="24" y="40" font-size="17" fill="#C3D8D2" font-weight="600">Crowding rules</text></g>
-  <text class="m eyebrow" x="64" y="608" font-size="18" fill="#5E7A74" font-weight="500">abdulelah.de</text>
+  <text class="m eyebrow" x="64" y="196" font-size="22" fill="#22E3C5" font-weight="600">Computer vision · crowd flow</text>
+  <text class="s" x="64" y="310" font-size="62" fill="#F4FFF9" font-weight="700" letter-spacing="-2.8">Stadium Gate Monitor</text>
+  <text class="s" x="64" y="380" font-size="42" fill="url(#inkFade)" font-weight="600" letter-spacing="-.9">Four streams, one threshold.</text>
+  <text class="s" x="64" y="442" font-size="24" fill="#8FA8A1">YOLO detection · gate zones · crowding rules</text>
+  <text class="m eyebrow" x="64" y="592" font-size="20" fill="#5E7A74" font-weight="500">abdulelah.de</text>
   <rect width="1280" height="640" rx="0" filter="url(#grain)" opacity="0.5" pointer-events="none"/>
 </svg>
