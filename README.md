@@ -1,115 +1,49 @@
-<picture>
-  <source media="(max-width: 600px)" srcset="assets/branding/hero-mobile.svg">
-  <img src="assets/branding/hero.svg" width="100%" alt="Stadium Gate Monitor — four streams, one threshold. YOLO person detection, gate zones and crowding decision rules.">
-</picture>
+<a href="https://github.com/Abdulel3h">
+  <picture>
+    <source media="(max-width: 600px)" srcset="assets/terminal-mobile.svg">
+    <img src="assets/terminal.svg" width="100%" alt="Stadium, computer vision monitoring. A sample gate state from /api/status: gate A 18 of 60 (normal), B 33 of 60 (busy), C 51 of 60 (overflow, past the 80 percent threshold), D 27 of 60 (normal). Alert: Gate C is 85% full, redirect to gate A.">
+  </picture>
+</a>
 
-# Stadium Gate Monitor
+**A computer-vision prototype that counts people at four stadium gates and turns the counts into a status a control room could act on.**
 
-A computer-vision prototype that watches stadium gate zones, estimates how many people are at each gate, and turns that into an operational status a control room could act on.
+Prototype. It runs on local video files or a webcam with hard-coded gate zones. It has not been calibrated against a real venue, and no accuracy is claimed.
 
-**Status: prototype.** It runs against local video files or a webcam with hard-coded gate zones. It has not been calibrated against a real venue, and no accuracy measurement is claimed.
+###### HOW IT WORKS
 
-## Problem
+1. **Detect.** YOLO finds people in each frame of a video file or webcam.
+2. **Place.** Each detection's centre is mapped to one of four configured gate zones.
+3. **Decide.** `DecisionEngine` sets each gate's status from occupancy: normal below 50%, busy below 75%, critical below 80%, overflow from 80%. It logs crowding and overflow alerts, suggests a redirect to the lightest gate and recommends where staff should go.
+4. **Serve.** Flask exposes the state at `/api/status`, and `dashboard.html` polls it every two seconds.
 
-Crowding at an entrance becomes a safety problem before anyone has counted it. Gate staff see their own queue, not the whole picture, and the decision that matters — move staff, redirect arrivals — depends on comparing gates against each other in the moment.
+###### EVIDENCE
 
-## Solution
+- The hero shows a sample state worked through the same thresholds and alert text as `stadium_system.py`: gate C at 85% is overflow, and the lightest gate is A.
+- Implemented and readable in `stadium_system.py`: person detection across four zones, four status states, an alert log, staff distribution, and Flask status and health endpoints.
 
-The system detects people in a video stream, assigns each detection to one of four configured gate zones, and runs the counts through a decision engine that produces a status, an alert log, an ETA estimate and a recommended staff distribution. A dashboard polls that state so the operational picture stays current.
+**Not claimed:** any measured accuracy. Zones are hard-coded per camera angle, no automated tests cover counting or thresholds, local model and video files make the repository large, and a real installation would need privacy, latency and operations review. [All limitations](docs/overview.md#limitations)
 
-## How it works
-
-1. **Detect.** YOLO finds people in each frame from a video file or webcam.
-2. **Place.** Each detection's centroid is mapped into one of the four configured gate zones.
-3. **Decide.** `DecisionEngine` updates every gate, assigns a status — normal, busy, critical or overflow — logs crowding and overflow alerts, estimates ETA and recommends where staff should go.
-4. **Serve.** A Flask API exposes the current state at `/api/status`.
-5. **Show.** `dashboard.html` polls that endpoint every two seconds and renders the gate board.
-
-## Architecture
-
-```text
-Video source or webcam
-  -> YOLO person detection
-  -> gate zone assignment
-  -> DecisionEngine status and alert logic
-  -> Flask /api/status
-  -> dashboard.html live monitor
-```
-
-| Component | Responsibility |
-|---|---|
-| `GateState` | Count, capacity, crowding incidents, entry rate, status, alert and redirect target |
-| `DecisionEngine` | Updates all gates, assigns status, logs alerts, estimates ETA, recommends staff |
-| `run_vision()` | YOLO detection and centroid-to-zone mapping |
-| `dashboard.html` | Polls `/api/status` and renders the live board |
-
-## Verified capabilities
-
-Implemented and readable in `stadium_system.py`; none is a measured accuracy result.
-
-- YOLO-based person detection across four configurable gate zones
-- Occupancy and crowding detection with four status states
-- Alert log for crowding and overflow events
-- Staff distribution recommendation derived from relative load
-- Flask status and health endpoints
-- HTML dashboard polling live gate status
-
-## Screenshot
+<details>
+<summary>Screenshot</summary>
 
 ![Stadium gate dashboard](assets/screenshots/stadium-dashboard.png)
 
 Captured from the committed dashboard HTML.
+</details>
 
-## Tech stack
-
-Python · OpenCV · Ultralytics YOLO · Flask
-
-## Quick start
+###### QUICK START
 
 ```bash
 python -m venv .venv
-. .venv/Scripts/activate
+. .venv/Scripts/activate           # macOS/Linux: . .venv/bin/activate
 pip install ultralytics opencv-python flask flask-cors numpy
 python stadium_system.py
 ```
 
-The API starts at `http://localhost:5000/api/status` and an OpenCV window shows the processed video.
+The API starts at `http://localhost:5000/api/status` and an OpenCV window shows the processed video. Set `VIDEO_SOURCE` in `stadium_system.py` to a scenario file or `0` for a webcam, open `dashboard.html` while the API runs, and press `q` to quit.
 
-- Change `VIDEO_SOURCE` in `stadium_system.py` to a local scenario file, or `0` for a webcam.
-- Open `dashboard.html` in a browser while the Flask API is running.
-- Press `q` in the OpenCV window to quit the vision loop.
+###### DOCUMENTATION
 
-Optional local environment:
+[Overview](docs/overview.md) · [Architecture](docs/architecture.md) · [Case study](docs/case-study.md) · [Engineering principles](docs/engineering-principles.md) · [Technical decisions](docs/technical-decisions.md) · [Reviewer guide](docs/reviewer-guide.md) · [Arabic notes](شرح.md)
 
-```bash
-ALLOWED_ORIGINS=http://localhost:5000,http://127.0.0.1:5000
-```
-
-## Limitations
-
-- **Zones are hard-coded.** Gate regions need calibration for every camera angle; they are not configuration-driven yet.
-- **Untested logic.** No automated tests validate counting, alert thresholds or the API schema.
-- **Repository weight.** Local model and video files make the repository large.
-- **Not deployment-ready.** A real installation would need camera privacy, latency and operations review.
-
-## Repository structure
-
-```text
-stadium_system.py     Vision loop, gate logic, Flask API
-dashboard.html        Live status dashboard
-scenario*.mp4         Local video scenarios
-yolo*.pt              YOLO model files
-شرح.md                Arabic project notes and setup explanation
-```
-
-## Documentation
-
-[Architecture](docs/architecture.md) · [Case study](docs/case-study.md) · [Engineering principles](docs/engineering-principles.md) · [Technical decisions](docs/technical-decisions.md) · [Reviewer guide](docs/reviewer-guide.md) · [Branding assets](assets/branding/README.md)
-
-## License
-
-No license file is currently present. All rights are reserved by default unless a license is added.
-
-## Contact
-
-**Abdulelah Alkhathami** · [Portfolio](https://abdulelah.de) · [GitHub](https://github.com/Abdulel3h) · [Email](mailto:me@abdulelah.de)
+<sub>[Abdulelah Alkhathami](https://github.com/Abdulel3h) · [abdulelah.de](https://www.abdulelah.de) · No license file yet, so all rights are reserved by default.</sub>
